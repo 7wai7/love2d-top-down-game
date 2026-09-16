@@ -1,0 +1,47 @@
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# VS Code
+.vscode/
+
+# Love2D Dev Tools
+_love2d_tools_bridge.lua
+
+# Lua language server
+.luarc.json
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# Build output
+build/
+dist/
+release/
+
+# LÖVE packages
+*.love
+
+# Native binaries
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Debug/profiling output
+profile/
+coverage/
+
+# Local environment/config
+.env
+.env.*
