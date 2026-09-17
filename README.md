@@ -288,20 +288,20 @@ The exact architecture may change during development as new systems and requirem
 
 ### Engine Foundation
 
-* [ ] Set up the basic LÖVE project structure
-* [ ] Implement the main game loop
+* [x] Set up the basic LÖVE project structure
+* [x] Implement the main game loop
 * [ ] Implement basic ECS architecture
-* [ ] Add input handling
-* [ ] Add basic rendering
+* [x] Add input handling
+* [x] Add basic rendering
 * [ ] Add asset loading and management
 * [ ] Add sprite animation support
 * [ ] Add collision handling
-* [ ] Add basic game state management
+* [x] Add basic scene lifecycle and switching
 
 ### Player
 
 * [ ] Create the player entity
-* [ ] Add WASD movement
+* [x] Add temporary WASD and arrow-key movement
 * [ ] Add player sprite and animations
 * [ ] Add player collision
 * [ ] Add player health
@@ -422,6 +422,10 @@ The exact architecture may change during development as new systems and requirem
 
 ## Current Status
 
-The project is in an early development stage.
+The initial engine foundation is implemented.
 
-Most gameplay systems and mechanics described in this README are currently planned and will be implemented gradually.
+A temporary playable scene demonstrates the game loop, input handling,
+fixed updates, basic rendering, and system execution.
+
+The player and World are currently placeholders. A complete ECS with
+separate components and system queries is planned as the next architectural step.
