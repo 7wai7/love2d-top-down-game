@@ -10,7 +10,7 @@ function DebugGridSystem.new(options)
     return self
 end
 
-function DebugGridSystem:draw(context)
+function DebugGridSystem:draw(_, context)
     if not (love and love.graphics) then
         return
     end

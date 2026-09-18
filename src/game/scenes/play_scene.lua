@@ -1,7 +1,11 @@
 local World = require("src.engine.world")
-local DebugGridSystem = require("src.game.systems.debug_grid_system")
-local PlayerControlSystem = require("src.game.systems.player_control_system")
-local PlayerRenderSystem = require("src.game.systems.player_render_system")
+local MovementSpeed = require("src.game.components.movement.movement_speed")
+local Velocity = require("src.game.components.movement.velocity")
+local PlayerControlled = require("src.game.components.player.player_controlled")
+local Position = require("src.game.components.spatial.position")
+local DebugGridSystem = require("src.game.systems.debug.debug_grid_system")
+local MovementSystem = require("src.game.systems.movement.movement_system")
+local PlayerControlSystem = require("src.game.systems.player.player_control_system")
 
 local PlayScene = {}
 PlayScene.__index = PlayScene
@@ -18,18 +22,19 @@ end
 function PlayScene:load(context)
     self.world = World.new()
 
-    self.player = self.world:createEntity("player")
-    self.player.position = {
-        x = context.screen.width / 2,
-        y = context.screen.height / 2,
-    }
-    self.player.velocity = { x = 0, y = 0 }
-    self.player.speed = 180
-    self.player.radius = 12
+    self.player = self.world:createEntity()
+    self.world:addComponent(
+        self.player,
+        Position.type,
+        Position.new(context.screen.width / 2, context.screen.height / 2)
+    )
+    self.world:addComponent(self.player, Velocity.type, Velocity.new())
+    self.world:addComponent(self.player, MovementSpeed.type, MovementSpeed.new(180))
+    self.world:addComponent(self.player, PlayerControlled.type, PlayerControlled.new())
 
     self.world:addSystem(DebugGridSystem.new({ cellSize = 32 }))
-    self.world:addSystem(PlayerControlSystem.new(self.player))
-    self.world:addSystem(PlayerRenderSystem.new(self.player))
+    self.world:addSystem(PlayerControlSystem.new())
+    self.world:addSystem(MovementSystem.new())
 end
 
 function PlayScene:fixedUpdate(dt, context)
@@ -42,15 +47,6 @@ end
 
 function PlayScene:draw(context)
     self.world:draw(context)
-end
-
-function PlayScene:resize(width, height)
-    if self.player then
-        local radius = self.player.radius
-
-        self.player.position.x = math.max(radius, math.min(width - radius, self.player.position.x))
-        self.player.position.y = math.max(radius, math.min(height - radius, self.player.position.y))
-    end
 end
 
 return PlayScene

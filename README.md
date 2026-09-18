@@ -290,7 +290,7 @@ The exact architecture may change during development as new systems and requirem
 
 * [x] Set up the basic LÖVE project structure
 * [x] Implement the main game loop
-* [ ] Implement basic ECS architecture
+* [x] Implement basic ECS architecture
 * [x] Add input handling
 * [x] Add basic rendering
 * [ ] Add asset loading and management
@@ -300,7 +300,7 @@ The exact architecture may change during development as new systems and requirem
 
 ### Player
 
-* [ ] Create the player entity
+* [x] Create the player entity
 * [x] Add temporary WASD and arrow-key movement
 * [ ] Add player sprite and animations
 * [ ] Add player collision
