@@ -293,7 +293,7 @@ The exact architecture may change during development as new systems and requirem
 * [x] Implement basic ECS architecture
 * [x] Add input handling
 * [x] Add basic rendering
-* [ ] Add asset loading and management
+* [x] Add asset loading and management
 * [ ] Add sprite animation support
 * [ ] Add collision handling
 * [x] Add basic scene lifecycle and switching
@@ -427,5 +427,9 @@ The initial engine foundation is implemented.
 A temporary playable scene demonstrates the game loop, input handling,
 fixed updates, basic rendering, and system execution.
 
-The player and World are currently placeholders. A complete ECS with
-separate components and system queries is planned as the next architectural step.
+The engine includes an ECS with separate component stores and system queries.
+Its asset manager registers game resources by stable IDs, loads them on demand,
+and caches images and spritesheet frames for reuse across scenes.
+
+The current scene uses temporary player movement and debug rendering while
+dungeon, collision, and final sprite-animation features are still in development.

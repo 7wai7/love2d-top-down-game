@@ -1,3 +1,4 @@
+local AssetManager = require("src.engine.assets.asset_manager")
 local Input = require("src.engine.input")
 local Loop = require("src.engine.loop")
 
@@ -16,6 +17,8 @@ function Engine.new(config)
     local self = setmetatable({}, Engine)
 
     self.config = config or {}
+    self.assets = AssetManager.new()
+    self.assets:registerAll(self.config.assetManifest or {})
     self.input = Input.new()
     self.loop = Loop.new({
         fixedDt = self.config.fixedDt,
@@ -42,6 +45,7 @@ function Engine:load(initialContext)
 
     self.context = {
         args = initialContext and initialContext.args or {},
+        assets = self.assets,
         config = self.config,
         engine = self,
         input = self.input,

@@ -1,4 +1,5 @@
 local Engine = require("src.engine.engine")
+local AssetManifest = require("src.game.assets.manifest")
 local PlayScene = require("src.game.scenes.play_scene")
 
 local App = {}
@@ -8,6 +9,7 @@ function App.new()
     local self = setmetatable({}, App)
 
     self.engine = Engine.new({
+        assetManifest = AssetManifest,
         title = "Top-Down Roguelike",
         fixedDt = 1 / 60,
         maxDelta = 0.25,
