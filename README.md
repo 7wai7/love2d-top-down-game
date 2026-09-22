@@ -294,7 +294,7 @@ The exact architecture may change during development as new systems and requirem
 * [x] Add input handling
 * [x] Add basic rendering
 * [x] Add asset loading and management
-* [ ] Add sprite animation support
+* [x] Add sprite animation support
 * [ ] Add collision handling
 * [x] Add basic scene lifecycle and switching
 
@@ -302,7 +302,7 @@ The exact architecture may change during development as new systems and requirem
 
 * [x] Create the player entity
 * [x] Add temporary WASD and arrow-key movement
-* [ ] Add player sprite and animations
+* [x] Add player sprite and animations
 * [ ] Add player collision
 * [ ] Add player health
 * [ ] Add taking damage
@@ -424,12 +424,9 @@ The exact architecture may change during development as new systems and requirem
 
 The initial engine foundation is implemented.
 
-A temporary playable scene demonstrates the game loop, input handling,
-fixed updates, basic rendering, and system execution.
-
 The engine includes an ECS with separate component stores and system queries.
 Its asset manager registers game resources by stable IDs, loads them on demand,
 and caches images and spritesheet frames for reuse across scenes.
 
-The current scene uses temporary player movement and debug rendering while
-dungeon, collision, and final sprite-animation features are still in development.
+The player is built from separate ECS components and uses independent idle and
+walk spritesheets loaded through the asset manager.
