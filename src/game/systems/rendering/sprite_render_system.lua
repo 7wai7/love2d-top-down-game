@@ -1,4 +1,5 @@
 local Sprite = require("src.game.components.rendering.sprite")
+local Facing = require("src.game.components.spatial.facing")
 local Position = require("src.game.components.spatial.position")
 
 local unpack = table.unpack or unpack
@@ -33,6 +34,7 @@ function SpriteRenderSystem:draw(world)
         if sprite.visible and sprite.image then
             table.insert(drawables, {
                 entity = entity,
+                facing = world:getComponent(entity, Facing.type),
                 position = position,
                 sprite = sprite,
             })
@@ -47,6 +49,8 @@ function SpriteRenderSystem:draw(world)
         local sprite = drawable.sprite
         local x = position.x + sprite.offsetX
         local y = position.y + sprite.offsetY
+        local direction = drawable.facing and drawable.facing.direction or 1
+        local scaleX = sprite.scaleX * direction
 
         love.graphics.setColor(unpack(sprite.color))
 
@@ -57,7 +61,7 @@ function SpriteRenderSystem:draw(world)
                 x,
                 y,
                 sprite.rotation,
-                sprite.scaleX,
+                scaleX,
                 sprite.scaleY,
                 sprite.originX,
                 sprite.originY
@@ -68,7 +72,7 @@ function SpriteRenderSystem:draw(world)
                 x,
                 y,
                 sprite.rotation,
-                sprite.scaleX,
+                scaleX,
                 sprite.scaleY,
                 sprite.originX,
                 sprite.originY

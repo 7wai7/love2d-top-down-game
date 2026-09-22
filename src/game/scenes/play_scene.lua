@@ -4,9 +4,11 @@ local MovementSpeed = require("src.game.components.movement.movement_speed")
 local Velocity = require("src.game.components.movement.velocity")
 local PlayerControlled = require("src.game.components.player.player_controlled")
 local Sprite = require("src.game.components.rendering.sprite")
+local Facing = require("src.game.components.spatial.facing")
 local Position = require("src.game.components.spatial.position")
 local AnimationSystem = require("src.game.systems.animation.animation_system")
 local DebugGridSystem = require("src.game.systems.debug.debug_grid_system")
+local FacingSystem = require("src.game.systems.movement.facing_system")
 local MovementSystem = require("src.game.systems.movement.movement_system")
 local PlayerControlSystem = require("src.game.systems.player.player_control_system")
 local PlayerMovementAnimationSystem =
@@ -37,6 +39,7 @@ function PlayScene:load(context)
     self.world:addComponent(self.player, Velocity.type, Velocity.new())
     self.world:addComponent(self.player, MovementSpeed.type, MovementSpeed.new(180))
     self.world:addComponent(self.player, PlayerControlled.type, PlayerControlled.new())
+    self.world:addComponent(self.player, Facing.type, Facing.new(1))
 
     -- Rendering components require LÖVE graphics and are skipped by headless tests.
     if love and love.graphics then
@@ -76,6 +79,7 @@ function PlayScene:load(context)
 
     self.world:addSystem(DebugGridSystem.new({ cellSize = 32 }))
     self.world:addSystem(PlayerControlSystem.new())
+    self.world:addSystem(FacingSystem.new())
     self.world:addSystem(MovementSystem.new())
     self.world:addSystem(PlayerMovementAnimationSystem.new())
     self.world:addSystem(AnimationSystem.new())
