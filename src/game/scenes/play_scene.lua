@@ -1,5 +1,6 @@
 local World = require("src.engine.world")
 local Animator = require("src.game.components.animation.animator")
+local Enemy = require("src.game.components.enemy.enemy")
 local MovementSpeed = require("src.game.components.movement.movement_speed")
 local Velocity = require("src.game.components.movement.velocity")
 local PlayerControlled = require("src.game.components.player.player_controlled")
@@ -23,6 +24,7 @@ function PlayScene.new()
 
     self.world = World.new()
     self.player = nil
+    self.enemy = nil
 
     return self
 end
@@ -41,11 +43,22 @@ function PlayScene:load(context)
     self.world:addComponent(self.player, PlayerControlled.type, PlayerControlled.new())
     self.world:addComponent(self.player, Facing.type, Facing.new(1))
 
+    self.enemy = self.world:createEntity()
+    self.world:addComponent(self.enemy, Enemy.type, Enemy.new())
+    self.world:addComponent(
+        self.enemy,
+        Position.type,
+        Position.new(context.screen.width / 2 + 128, context.screen.height / 2)
+    )
+    self.world:addComponent(self.enemy, Facing.type, Facing.new(-1))
+
     -- Rendering components require LÖVE graphics and are skipped by headless tests.
     if love and love.graphics then
         context.assets:preload({
             "player.idle",
             "player.walk",
+            "enemy-1.idle",
+            "enemy-1.walk",
         })
 
         local idleSpriteSheet = context.assets:get("player.idle")
@@ -74,6 +87,34 @@ function PlayScene:load(context)
             self.player,
             Animator.type,
             Animator.new(animationSet, "idle")
+        )
+
+        local enemyIdleSpriteSheet = context.assets:get("enemy-1.idle")
+        local enemyWalkSpriteSheet = context.assets:get("enemy-1.walk")
+        local enemyAnimationSet = {
+            idle = {
+                sheet = enemyIdleSpriteSheet,
+                frameDuration = 0.2,
+            },
+            walk = {
+                sheet = enemyWalkSpriteSheet,
+                frameDuration = 0.1,
+            },
+        }
+
+        self.world:addComponent(self.enemy, Sprite.type, Sprite.new({
+            image = enemyIdleSpriteSheet.image,
+            quad = enemyIdleSpriteSheet.frames[1],
+            originX = 8,
+            originY = 24,
+            scaleX = 3,
+            scaleY = 3,
+            layer = 10,
+        }))
+        self.world:addComponent(
+            self.enemy,
+            Animator.type,
+            Animator.new(enemyAnimationSet, "idle")
         )
     end
 

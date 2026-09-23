@@ -15,4 +15,20 @@ return {
         frameCount = 4,
         filter = "nearest",
     },
+    ["enemy-1.idle"] = {
+        type = "spriteSheet",
+        path = "assets/enemy-1-idle.png",
+        frameWidth = 16,
+        frameHeight = 24,
+        frameCount = 4,
+        filter = "nearest",
+    },
+    ["enemy-1.walk"] = {
+        type = "spriteSheet",
+        path = "assets/enemy-1-walk.png",
+        frameWidth = 16,
+        frameHeight = 24,
+        frameCount = 4,
+        filter = "nearest",
+    },
 }
