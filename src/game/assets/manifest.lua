@@ -31,4 +31,9 @@ return {
         frameCount = 4,
         filter = "nearest",
     },
+    ["ui.healthBar"] = {
+        type = "image",
+        path = "assets/UI/hud/health-bar.png",
+        filter = "nearest",
+    },
 }

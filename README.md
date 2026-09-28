@@ -23,6 +23,8 @@ The basic gameplay includes:
 * Random exit room
 * Player movement
 * Player health
+* Player armor
+* Player mana
 * Enemy spawning
 * Enemy AI
 * Combat
@@ -191,17 +193,30 @@ Rewards may include:
 * Healing
 * Other special items
 
-## Health and Death
+## Player Resources and Death
 
 The player has a limited amount of health.
 
 Health does not automatically regenerate. The player must find healing items or receive healing as a reward.
+
+Armor is a separate defensive resource, and mana is a separate resource for
+gameplay actions that require it. Their exact spending and recovery rules will
+be defined together with the combat systems.
 
 Enemies and other hazards can damage the player.
 
 When the player's health reaches zero, the current run ends.
 
 The player loses temporary weapons and upgrades and starts again in a newly generated dungeon.
+
+## Visual Style
+
+The game and its user interface use pixel art.
+
+All UI elements must use the same logical pixel size. Icons, health indicators,
+borders, text, and shapes must align to one shared pixel grid and must not mix
+different pixel scales. UI textures should use nearest-neighbor filtering so
+their pixels remain sharp when rendered.
 
 ## Game Loop
 
@@ -304,7 +319,9 @@ The exact architecture may change during development as new systems and requirem
 * [x] Add temporary WASD and arrow-key movement
 * [x] Add player sprite and animations
 * [ ] Add player collision
-* [ ] Add player health
+* [x] Add player health
+* [ ] Add player armor
+* [ ] Add player mana
 * [ ] Add taking damage
 * [ ] Add player death
 * [ ] Add interaction with items and dungeon objects
@@ -430,3 +447,8 @@ and caches images and spritesheet frames for reuse across scenes.
 
 The player is built from separate ECS components and uses independent idle and
 walk spritesheets loaded through the asset manager.
+
+The scene-owned PlayHud finds the player through an ECS query and renders
+through a separate UI layer. A shared UI renderer handles logical pixel
+scaling, image operations, and reusable elements without adding an ECS system
+for every HUD widget.

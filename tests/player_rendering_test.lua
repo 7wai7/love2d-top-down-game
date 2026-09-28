@@ -3,6 +3,9 @@ local previousLove = love
 love = {
     graphics = {
         newImage = function(path)
+            local file = assert(io.open(path, "rb"), "image asset does not exist: " .. path)
+            file:close()
+
             return {
                 path = path,
                 getDimensions = function()

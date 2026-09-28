@@ -1,5 +1,6 @@
 local World = require("src.engine.world")
 local Animator = require("src.game.components.animation.animator")
+local Health = require("src.game.components.combat.health")
 local Enemy = require("src.game.components.enemy.enemy")
 local MovementSpeed = require("src.game.components.movement.movement_speed")
 local Velocity = require("src.game.components.movement.velocity")
@@ -15,6 +16,7 @@ local PlayerControlSystem = require("src.game.systems.player.player_control_syst
 local PlayerMovementAnimationSystem =
     require("src.game.systems.player.player_movement_animation_system")
 local SpriteRenderSystem = require("src.game.systems.rendering.sprite_render_system")
+local PlayHud = require("src.game.ui.play_hud")
 
 local PlayScene = {}
 PlayScene.__index = PlayScene
@@ -25,12 +27,14 @@ function PlayScene.new()
     self.world = World.new()
     self.player = nil
     self.enemy = nil
+    self.playHud = nil
 
     return self
 end
 
 function PlayScene:load(context)
     self.world = World.new()
+    self.playHud = nil
 
     self.player = self.world:createEntity()
     self.world:addComponent(
@@ -42,6 +46,7 @@ function PlayScene:load(context)
     self.world:addComponent(self.player, MovementSpeed.type, MovementSpeed.new(180))
     self.world:addComponent(self.player, PlayerControlled.type, PlayerControlled.new())
     self.world:addComponent(self.player, Facing.type, Facing.new(1))
+    self.world:addComponent(self.player, Health.type, Health.new(100, 70))
 
     self.enemy = self.world:createEntity()
     self.world:addComponent(self.enemy, Enemy.type, Enemy.new())
@@ -51,6 +56,7 @@ function PlayScene:load(context)
         Position.new(context.screen.width / 2 + 128, context.screen.height / 2)
     )
     self.world:addComponent(self.enemy, Facing.type, Facing.new(-1))
+    self.world:addComponent(self.enemy, Health.type, Health.new(50))
 
     -- Rendering components require LÖVE graphics and are skipped by headless tests.
     if love and love.graphics then
@@ -116,6 +122,9 @@ function PlayScene:load(context)
             Animator.type,
             Animator.new(enemyAnimationSet, "idle")
         )
+
+        self.playHud = PlayHud.new(context.assets)
+        self.playHud:update(self.world)
     end
 
     self.world:addSystem(DebugGridSystem.new({ cellSize = 32 }))
@@ -133,10 +142,18 @@ end
 
 function PlayScene:update(dt, context)
     self.world:update(dt, context)
+
+    if self.playHud then
+        self.playHud:update(self.world)
+    end
 end
 
 function PlayScene:draw(context)
     self.world:draw(context)
+
+    if self.playHud then
+        self.playHud:draw(context)
+    end
 end
 
 return PlayScene

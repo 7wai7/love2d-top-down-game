@@ -121,12 +121,17 @@ function Engine:drawDebugOverlay()
         fps = love.timer.getFPS()
     end
 
-    love.graphics.setColor(1, 1, 1, 0.72)
-    love.graphics.print(("FPS %d  DT %.4f  Fixed %d"):format(
+    local text = ("FPS %d  DT %.4f  Fixed %d"):format(
         fps,
         stats.lastDt,
         stats.fixedSteps
-    ), 12, 12)
+    )
+    local font = love.graphics.getFont()
+    local screenWidth = self.context and self.context.screen.width or 0
+    local x = math.max(12, screenWidth - font:getWidth(text) - 12)
+
+    love.graphics.setColor(1, 1, 1, 0.72)
+    love.graphics.print(text, x, 12)
 end
 
 function Engine:keypressed(key, scancode, isrepeat)

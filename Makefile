@@ -14,3 +14,5 @@ test:
 	@luajit tests/facing_system_test.lua
 	@luajit tests/sprite_render_system_test.lua
 	@luajit tests/player_rendering_test.lua
+	@luajit tests/ui_renderer_test.lua
+	@luajit tests/play_hud_test.lua
