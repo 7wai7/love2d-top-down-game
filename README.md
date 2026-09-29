@@ -379,7 +379,7 @@ The exact architecture may change during development as new systems and requirem
 
 ### Enemies
 
-* [ ] Create the basic enemy entity
+* [x] Create the basic enemy entity
 * [ ] Add enemy health and damage
 * [ ] Implement Chaser behavior
 * [ ] Implement Shooter behavior
@@ -452,3 +452,7 @@ The scene-owned PlayHud finds the player through an ECS query and renders
 through a separate UI layer. A shared UI renderer handles logical pixel
 scaling, image operations, and reusable elements without adding an ECS system
 for every HUD widget.
+
+Combat entities use faction components instead of intrinsic enemy markers.
+Directed faction relations determine automatic targeting, damage, and helpful
+interactions between allies, neutral groups, and hostile groups.

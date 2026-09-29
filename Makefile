@@ -16,3 +16,4 @@ test:
 	@luajit tests/player_rendering_test.lua
 	@luajit tests/ui_renderer_test.lua
 	@luajit tests/play_hud_test.lua
+	@luajit tests/faction_relations_test.lua

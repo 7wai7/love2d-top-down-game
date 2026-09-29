@@ -1,8 +1,10 @@
+local Faction = require("src.game.components.combat.faction")
 local MovementSpeed = require("src.game.components.movement.movement_speed")
 local Velocity = require("src.game.components.movement.velocity")
 local PlayerControlled = require("src.game.components.player.player_controlled")
 local Facing = require("src.game.components.spatial.facing")
 local Position = require("src.game.components.spatial.position")
+local Factions = require("src.game.combat.factions")
 local PlayScene = require("src.game.scenes.play_scene")
 local assertEqual = require("tests.test_utils").assertEqual
 
@@ -22,6 +24,7 @@ local scene = PlayScene.new()
 scene:load(context)
 
 local player = scene.player
+local enemy = scene.enemy
 local world = scene.world
 
 assert(world:isAlive(player), "player entity should be alive")
@@ -42,6 +45,14 @@ assert(velocity, "player should have Velocity")
 
 local facing = world:getComponent(player, Facing.type)
 assert(facing, "player should have Facing")
+
+local playerFaction = world:getComponent(player, Faction.type)
+local enemyFaction = world:getComponent(enemy, Faction.type)
+
+assert(playerFaction, "player should have Faction")
+assert(enemyFaction, "enemy should have Faction")
+assertEqual(playerFaction.id, Factions.PLAYER, "player faction")
+assertEqual(enemyFaction.id, Factions.DUNGEON, "enemy faction")
 
 assertEqual(position.x, 400, "initial player x")
 assertEqual(position.y, 300, "initial player y")

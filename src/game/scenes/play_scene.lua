@@ -1,7 +1,7 @@
 local World = require("src.engine.world")
 local Animator = require("src.game.components.animation.animator")
+local Faction = require("src.game.components.combat.faction")
 local Health = require("src.game.components.combat.health")
-local Enemy = require("src.game.components.enemy.enemy")
 local MovementSpeed = require("src.game.components.movement.movement_speed")
 local Velocity = require("src.game.components.movement.velocity")
 local PlayerControlled = require("src.game.components.player.player_controlled")
@@ -16,6 +16,7 @@ local PlayerControlSystem = require("src.game.systems.player.player_control_syst
 local PlayerMovementAnimationSystem =
     require("src.game.systems.player.player_movement_animation_system")
 local SpriteRenderSystem = require("src.game.systems.rendering.sprite_render_system")
+local Factions = require("src.game.combat.factions")
 local PlayHud = require("src.game.ui.play_hud")
 
 local PlayScene = {}
@@ -47,9 +48,10 @@ function PlayScene:load(context)
     self.world:addComponent(self.player, PlayerControlled.type, PlayerControlled.new())
     self.world:addComponent(self.player, Facing.type, Facing.new(1))
     self.world:addComponent(self.player, Health.type, Health.new(100, 70))
+    self.world:addComponent(self.player, Faction.type, Faction.new(Factions.PLAYER))
 
     self.enemy = self.world:createEntity()
-    self.world:addComponent(self.enemy, Enemy.type, Enemy.new())
+    self.world:addComponent(self.enemy, Faction.type, Faction.new(Factions.DUNGEON))
     self.world:addComponent(
         self.enemy,
         Position.type,
